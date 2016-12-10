@@ -1,0 +1,18 @@
+DB_NAME=${WORDPRESS_DB_NAME}
+DB_USER=${WORDPRESS_DB_USER}
+DB_PASSWORD=${WORDPRESS_DB_PASSWORD}
+DB_HOST=${WORDPRESS_DB_HOST}
+
+WP_ENV=development
+WP_HOME=http://actu.dev
+WP_SITEURL=${WP_HOME}/wp
+
+# Generate your keys here: https://roots.io/salts.html
+AUTH_KEY='^n:CbiZ[AlV:y$I+%q];X!|_Kq+m2nGl3!))o:1#Z:f&lV;Q/tk8fhb*?aDQAN;*'
+SECURE_AUTH_KEY='<Op+L<e]_L41=f6pVt@U6vM}782)=noDL#0Oc.:we7=I!alKPYZCb^qQqTpLdo%X'
+LOGGED_IN_KEY='GoR/SMKkCP=aTN$k:gKbTSZJ6[d^xfTjDt}yG(|evxcbfi*QZu;`&/Dw@D^J+[mg'
+NONCE_KEY='0[*a)$dfkJZpiH;dUD=^r4+T|9+5|=J/ngm,Oy--m&Nq>R&/C.M`={nh8J*_7kXx'
+AUTH_SALT='ory0#0J:OOVxd-*zJsfBC7,-ewrt^yQ*vhVf28Gla!9rSUamZqu(y|W7?D7u<z6f'
+SECURE_AUTH_SALT='uB:$T+:U<|n?/FOq9$<N8/QEo6af|K6T`WhPv!|u71,jW|{Pc{E3t^vGLrj-6&lA'
+LOGGED_IN_SALT='y/0oBzliTy86++Wi^}@.>:Wt9w)b$/Ae<cej1v]d`.<bV/:yI]XljfH/)o:w6KFG'
+NONCE_SALT='Ny8#bvn,+BKNHU,>ts+=Y=67Ii[hpjONSxqD^@diRDR!PhD[PXz`EO(,mEMiY0(U'
