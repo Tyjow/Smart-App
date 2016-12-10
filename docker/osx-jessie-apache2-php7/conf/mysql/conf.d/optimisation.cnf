@@ -1,0 +1,15 @@
+[mysqld]
+innodb_ft_min_token_size= 5
+innodb_ft_max_token_size= 12
+innodb_optimize_fulltext_only=ON
+ft_min_word_len=5
+ft_max_word_len=12
+
+[myisamchk]
+innodb_ft_min_token_size= 5
+innodb_ft_max_token_size= 12
+innodb_optimize_fulltext_only=ON
+ft_min_word_len=5
+ft_max_word_len=12
+
+
