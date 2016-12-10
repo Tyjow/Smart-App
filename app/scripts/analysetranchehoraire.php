@@ -3,6 +3,8 @@
 $annees = [2015, 2016];
 
 $oDb = new mysqli('percona57', 'root', 'root', 'smartapp');
+$oDb->set_charset("utf8");
+
 $csvSrcPath     = __DIR__ . '/data';
 
 foreach($annees as $annee) {

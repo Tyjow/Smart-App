@@ -1,0 +1,72 @@
+date début,date de fin,Type,Libellé
+01/01/2015,01/01/2015,Jour de l'an,Férié
+07/01/2015,09/01/2015,Attentats Charlie Hebdo,Divers
+21/02/2015,09/03/2015,Vacances d'hiver,Vacances
+06/04/2015,06/04/2015,Lundi de Pâques,Férié
+25/04/2015,11/05/2015,Vacances de printemps,Vacances
+01/05/2015,01/05/2015,Fête du Travail,Férié
+08/05/2015,08/05/2015,8 mai 1945,Férié
+14/05/2015,14/05/2015,Jeudi de l'Ascension,Férié
+25/05/2015,25/05/2015,Lundi de Pentecôte,Férié
+04/07/2015,01/09/2015,Vacances d'étét,Vacances
+11/07/2015,11/07/2015,Tour de France (Rennes),Evènements Sportifs
+14/07/2015,14/07/2015,Fête Nationale,Férié
+15/08/2015,15/08/2015,Assomption,Férié
+01/11/2015,01/11/2015,La Toussaint,Férié
+11/11/2015,11/11/2015,Armistice,Férié
+13/11/2015,14/11/2015,Attentats Paris,Divers
+17/10/2015,02/11/2015,Vacances de la Toussaint,Vacances
+19/12/2015,04/01/2016,Vacances de Noël,Vacances
+25/12/2015,25/12/2015,Noël,Férié
+01/01/2016,01/01/2016,Jour de l'an,Férié
+06/02/2016,22/02/2016,Vacances d'hiver,Vacances
+28/03/2016,28/03/2016,Lundi de Pâques,Férié
+02/04/2016,18/04/2016,Vacances de printemps,Vacances
+01/05/2016,01/05/2016,Fête du Travail,Férié
+04/05/2016,09/05/2016,Ponts de l'Ascension,Vacances
+08/05/2016,08/05/2016,8 mai 1945,Férié
+05/05/2016,05/05/2016,Jeudi de l'Ascension,Férié
+16/05/2016,16/05/2016,Lundi de Pentecôte,Férié
+10/06/2016,10/07/2016,Euro 2016,Evènements Sportifs
+04/07/2016,04/07/2016,Tour de France (Ille-et-Vilaine),Evènements Sportifs
+05/07/2016,01/09/2016,Vacances d'été,Vacances
+06/07/2016,10/07/2016,Championnats d'Europe d'Athlétisme,Evènements Sportifs
+14/07/2016,14/07/2016,Fête Nationale,Férié
+14/07/2016,15/07/2016,Attentats de Nice,Divers
+05/08/2016,21/08/2016,Jeux Olympiques d'été,Evènements Sportifs
+15/08/2016,15/08/2016,Assomption,Férié
+19/10/2016,03/11/2016,Vacances de la Toussaint,Vacances
+01/11/2016,01/11/2016,La Toussaint,Férié
+11/11/2016,11/11/2016,Armistice,Férié
+17/12/2016,03/01/2017,Vacances de Noël,Vacances
+25/12/2016,25/12/2016,Noël,Férié
+01/01/2017,01/01/2017,Jour de l'an,Férié
+11/02/2017,27/02/2017,Vacances d'hiver,Vacances
+08/04/2017,24/04/2017,Vacances de Printemps,Vacances
+17/04/2017,17/04/2017,Lundi de Pâques,Férié
+01/05/2017,01/05/2017,Fête du Travail,Férié
+08/05/2017,08/05/2017,8 mai 1945,Férié
+24/05/2017,29/05/2017,Pont de l'Ascension,Vacances
+25/05/2017,25/05/2017,Jeudi de l'Ascension,Férié
+05/06/2017,05/06/2017,Lundi de Pentecôte,Férié
+14/07/2017,14/07/2017,Fête Nationale,Férié
+08/07/2017,04/09/2017,Vacances d'été,Vacances
+15/08/2017,15/08/2017,Assomption,Férié
+21/10/2017,06/11/2017,Vacances de la Toussaint,Vacances
+01/11/2017,01/11/2017,La Toussaint,Férié
+11/11/2017,11/11/2017,Armistice,Férié
+23/12/2017,08/12/2017,Vacances,Vacances
+25/12/2017,25/12/2017,Noël,Férié
+01/01/2018,01/01/2018,Jour de l'an,Férié
+24/02/2018,12/03/2018,Vacances d'hiver,Vacances
+02/04/2018,02/04/2018,Lundi de Pâques,Férié
+21/04/2018,07/05/2018,Vacances de printemps,Vacances
+01/05/2018,01/05/2018,Fête du Travail,Férié
+08/05/2018,08/05/2018,8 mai 1945,Férié
+10/05/2018,10/05/2018,Jeudi de l'Ascension,Férié
+21/06/2018,21/06/2018,Lundi de Pentecôte,Férié
+14/07/2018,14/07/2018,Fête Nationale,Férié
+15/08/2018,15/08/2018,Assomption,Férié
+01/11/2018,01/11/2018,La Toussaint,Férié
+11/11/2018,11/11/2018,Armistice,Férié
+25/12/2018,25/12/2018,Noël,Férié

@@ -1,11 +1,11 @@
 <?php
-
-$oDb = new mysqli('percona57', 'root', 'root', 'smartapp');
-
 $stationId = '000322'; //RENNES-ST JACQUES
 
-$srcPath = __DIR__ . '/data';
+$oDb = new mysqli('percona57', 'root', 'root', 'smartapp');
+$oDb->set_charset("utf8");
 
+
+$srcPath = __DIR__ . '/data';
 $fileTempMax = sprintf('TX_STAID%s.txt', $stationId);
 $fileTempMin = sprintf('TN_STAID%s.txt', $stationId);
 
@@ -49,9 +49,10 @@ foreach($tempFileContent as $row) {
         $data[$date] = [];
     }
     $data[$date]['min'] = (float)((int)$cols[3]/10);
-
 }
+
 try {
+
     foreach ($data as $date => $temperatures) {
         $stmt = $oDb->stmt_init();
         $stmt->prepare("INSERT INTO `evenement_meteo` (`date`, `temperature_max`, `temperature_min`) VALUES (?, ?, ?);");
@@ -60,6 +61,9 @@ try {
 
         $stmt->execute();
     }
+
+    $oDb->close();
+
 } catch (Exception $e) {
     $error = $e->getMessage();
     print("\n==== Erreur ====\n\n" . $error . "\n\n");
