@@ -1,0 +1,8 @@
+## Sources
+src/*.bak
+src/.~lock.*#
+
+
+## Sql
+sql/*
+!sql/.gitkeep
