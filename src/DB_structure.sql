@@ -80,7 +80,7 @@ CREATE TABLE `evenement_divers` (
 # ------------------------------------------------------------
 
 CREATE TABLE `evenement_meteo` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   `type` tinyint(1) DEFAULT NULL,
   `label` tinyint(1) DEFAULT NULL,
@@ -88,7 +88,8 @@ CREATE TABLE `evenement_meteo` (
   `neige` tinyint(1) DEFAULT NULL,
   `soleil` tinyint(1) DEFAULT NULL,
   `vent` tinyint(1) DEFAULT NULL,
-  `temperature` tinyint(3) unsigned NOT NULL,
+  `temperature_max` decimal(4,2) NOT NULL,
+  `temperature_min` decimal(4,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
