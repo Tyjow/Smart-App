@@ -33,10 +33,19 @@ $app['modelMeteo'] = function() use ($app) {
 };
 
 
+$app->mount('/activite', new App\Activite\Controller());
+
+$app->get('/entrees', function() use ($app) {
+    include __DIR__ . '/src/stat_you.html';
+    return true;
+});
+
 $app->get('/', function () use ($app) {
     include 'index.html';
     return true;
 });
+
+
 
 /**
  * Marché
@@ -49,7 +58,6 @@ $app->get('/', function () use ($app) {
 /**
  * Activité
  */
-$app->mount('/activite', new App\Activite\Controller());
 
 /*
 $app->get('/activite/annee/getAll', function () use ($app) {
