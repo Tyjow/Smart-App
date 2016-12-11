@@ -67,15 +67,27 @@ class Model
     {
 
         $query = $this->_oDb->createQueryBuilder();
-
-        $query->select('MONTH(`jour_date`) AS mois, `marche_label`, sum(quantites_vendues) AS quantites_vendues');
         $query->from($this->_table);
 
-        $query->where('jour_date BETWEEN :periodeDebut AND :periodeFin');
+        if($groupBy === null || $groupBy === 'mois') {
+            $query->select('DATE_FORMAT(jour_date,"%Y-%m") AS mois, `marche_label`, sum(quantites_vendues) AS quantites_vendues');
+            $query->groupBy('`mois`, `marche_label`');
+            $query->orderBy('`mois`');
+        }
+        elseif($groupBy === 'semaine') {
+            $query->select('DATE_FORMAT(jour_date, "%Y-%v") AS semaine, `marche_label`, sum(quantites_vendues) AS quantites_vendues');
+            $query->groupBy('`semaine`, `marche_label`');
+            $query->orderBy('`semaine`');
+        }
+        elseif($groupBy === 'jour') {
+            $query->select('`jour_date` AS jour, `marche_label`, sum(quantites_vendues) AS quantites_vendues');
+            $query->groupBy('`jour`, `marche_label`');
+            $query->orderBy('`jour`');
+        }
+
+        $query->where('jour_date >= :periodeDebut AND jour_date <= :periodeFin');
         $query->setParameter(':periodeDebut', $periodeDebut);
         $query->setParameter(':periodeFin', $periodeFin);
-
-        $query->groupBy('`mois`, `marche_label`');
 
         return $query->execute()->fetchAll();
     }

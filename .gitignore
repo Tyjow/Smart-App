@@ -6,3 +6,4 @@ src/.~lock.*#
 ## Sql
 sql/*
 !sql/.gitkeep
+app/vendor

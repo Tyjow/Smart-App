@@ -1,5 +1,6 @@
 <?php
 ini_set('date.timezone', 'Europe/Paris');
+setlocale(LC_ALL, 'fr_FR.UTF-8');
 
 $loader = require __DIR__.'/vendor/autoload.php';
 $loader->add('App', __DIR__ . '/src/');
@@ -8,6 +9,7 @@ $app = new Silex\Application();
 
 $app['debug'] = true;
 
+\Hisune\EchartsPHP\Config::$minify = false;
 
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => array (

@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Smart Metrix</title>
 
-    <link rel="stylesheet" type="text/css" href="lib/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="lib/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="/lib/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/app.css">
 </head>
 <body>
 
@@ -20,19 +20,32 @@
     <div class="side_links">
         <li>
             <a>
-                <i class="fa fa-eye"></i> Discover
+                <i class="fa fa-eye"></i> Evolutions des marchés
+            </a><br />
+
+            <a href="http://smartapp.dev/activite/marches/20161001_20161031/jour/precipitations"> > Au jour + précipitations</a><br />
+
+<br />
+
+            <a href="http://smartapp.dev/activite/marches/20161001_20161031/jour/temperaturemax"> > Au jour + température max</a><br />
+<br /><br />
+            <a href="http://smartapp.dev/activite/marches/20150101_20150228/semaine"> > Soldes hiver 2015</a>
+            <a href="http://smartapp.dev/activite/marches/20160101_20160228/semaine"> > Soldes hiver 2016</a>
+
+<br /><br />
+
+            <a href="http://smartapp.dev/activite/marches/20150603_20150830/semaine"> > Soldes été 2015</a>
+            <a href="http://smartapp.dev/activite/marches/20160602_20160831/semaine"> > Soldes été 2016</a>
+
+            <br /><br />
+            <a href="http://smartapp.dev/activite/marches/20150201_20150216/jour">
+            Saint-Valentin 2015
+            </a>
+            <a href="http://smartapp.dev/activite/marches/20160201_20160216/jour">
+            Saint-Valentin 2016
             </a>
         </li>
-        <li>
-            <a>
-                <i class="fa fa-line-chart"></i> Visualize
-            </a>
-        </li>
-        <li>
-            <a>
-                <i class="fa fa-bar-chart"></i> Graphs
-            </a>
-        </li>
+
     </div>
 </div>
 
@@ -46,123 +59,19 @@
     </ul>
 
     <!-- core de la page sous la navbar grise -->
-    <div id="chart" style="width: 800px; height: 600px;"></div>
-    <?php var_dump();?>
+    <!-- <div id="chart" style="width: 800px; height: 600px;"></div> -->
+    <div class="content" style="padding-top: 100px;">
+    <?php
+    echo $chart->render('simple-custom-id');
+    ?>
+    </div>
 </div>
 
 
-<script type="text/javascript" src="lib/js/jquery.js"></script>
-<script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="lib/js/echarts-all.js"></script>
-<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="/lib/js/jquery.js"></script>
+<script type="text/javascript" src="/lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/app.js"></script>
 <script>
-
-var option = {
-    tooltip : {
-        trigger: 'axis',
-        axisPointer : {
-            type : 'shadow'
-        }
-    },
-    legend: {
-        data:['Toto','Yannux','Stock','Titi','搜索引擎','百度','谷歌','必应','其他']
-    },
-    toolbox: {
-        show : true,
-        orient: 'vertical',
-        x: 'right',
-        y: 'center',
-        feature : {
-            mark : {show: true},
-            dataView : {show: true, readOnly: false},
-            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-            restore : {show: true},
-            saveAsImage : {show: true}
-        }
-    },
-    calculable : true,
-    xAxis : [
-        {
-            type : 'category',
-            data : ['Accessoires','周二','周三','周四','周五','周六','周日']
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value'
-        }
-    ],
-    series : [
-        {
-            name:'Toto',
-            type:'bar',
-            data:[320, 332, 301, 334, 390, 330, 320]
-        },
-        {
-            name:'Yannux',
-            type:'bar',
-            stack: 'latifa',
-            data:[120, 132, 101, 134, 90, 230, 210]
-        },
-        {
-            name:'Stock',
-            type:'bar',
-            stack: 'latifa',
-            data:[220, 182, 191, 234, 290, 330, 310]
-        },
-        {
-            name:'Titi',
-            type:'bar',
-            stack: 'latifa',
-            data:[150, 232, 201, 154, 190, 330, 410]
-        },
-        {
-            name:'搜索引擎',
-            type:'bar',
-            data:[862, 1018, 964, 1026, 1679, 1600, 1570],
-            markLine : {
-                itemStyle:{
-                    normal:{
-                        lineStyle:{
-                            type: 'dashed'
-                        }
-                    }
-                },
-                data : [
-                    [{type : 'min'}, {type : 'max'}]
-                ]
-            }
-        },
-        {
-            name:'百度',
-            type:'bar',
-            barWidth : 5,
-            stack: '搜索引擎',
-            data:[620, 732, 701, 734, 1090, 1130, 1120]
-        },
-        {
-            name:'谷歌',
-            type:'bar',
-            stack: '搜索引擎',
-            data:[120, 132, 101, 134, 290, 230, 220]
-        },
-        {
-            name:'必应',
-            type:'bar',
-            stack: '搜索引擎',
-            data:[60, 72, 71, 74, 190, 130, 110]
-        },
-        {
-            name:'其他',
-            type:'bar',
-            stack: '搜索引擎',
-            data:[62, 82, 91, 84, 109, 110, 120]
-        }
-    ]
-};
-var chart = echarts.init(document.getElementById('chart'));
-chart.setOption(option);
-
 </script>
 </body>
 </html>

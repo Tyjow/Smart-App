@@ -8,7 +8,7 @@ $oDb->set_charset("utf8");
 $srcPath = __DIR__ . '/data';
 $fileTempMax = sprintf('TX_STAID%s.txt', $stationId);
 $fileTempMin = sprintf('TN_STAID%s.txt', $stationId);
-
+$filePrecip  = sprintf('RR_STAID%s.txt', $stationId);
 
 $tempFileContent = explode("\n", file_get_contents($srcPath . '/' . $fileTempMax));
 foreach($tempFileContent as $row) {
@@ -32,7 +32,6 @@ foreach($tempFileContent as $row) {
 
 
 $tempFileContent = explode("\n", file_get_contents($srcPath . '/' . $fileTempMin));
-
 foreach($tempFileContent as $row) {
 
     if(0 === preg_match(',(2015|2016)([0-9]{2})([0-9]{2}),', $row, $matches)) {
@@ -51,13 +50,33 @@ foreach($tempFileContent as $row) {
     $data[$date]['min'] = (float)((int)$cols[3]/10);
 }
 
+// Précipitations
+$tempFileContent = explode("\n", file_get_contents($srcPath . '/' . $filePrecip));
+foreach($tempFileContent as $row) {
+
+    if(0 === preg_match(',(2015|2016)([0-9]{2})([0-9]{2}),', $row, $matches)) {
+        continue;
+    }
+    if(!in_array($matches[1], [2015,2016])) {
+        continue;
+    }
+
+    $date = DateTime::createFromFormat('Ymd', $matches[0])->format('Y-m-d');
+    $cols = explode(',', $row);
+
+    if(!isset($data[$date])) {
+        $data[$date] = [];
+    }
+    $data[$date]['precipitations'] = (float)((int)$cols[3]/10);
+}
+
 try {
 
     foreach ($data as $date => $temperatures) {
         $stmt = $oDb->stmt_init();
-        $stmt->prepare("INSERT INTO `evenement_meteo` (`date`, `temperature_max`, `temperature_min`) VALUES (?, ?, ?);");
+        $stmt->prepare("INSERT INTO `evenement_meteo` (`date`, `pluie`, `temperature_max`, `temperature_min`) VALUES (?, ?, ?, ?);");
 
-        $stmt->bind_param('sdd', $date, $temperatures['max'], $temperatures['min']);
+        $stmt->bind_param('sddd', $date, $temperatures['precipitations'], $temperatures['max'], $temperatures['min']);
 
         $stmt->execute();
     }

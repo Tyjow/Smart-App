@@ -1,8 +1,11 @@
 <?php
 namespace App\Activite;
 
+use \DatePeriod;
+use \DateInterval;
 use Silex\Application;
 use \DateTime as DateTime;
+use Hisune\EchartsPHP\ECharts;
 use Silex\Api\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,11 +26,12 @@ class Controller implements ControllerProviderInterface
         $factory->get('/ca/{etat}/{periode}', 'App\Activite\Controller::ca');
 
         $factory->get(
-            '/marches/{periode}/{group_by}'
+            '/marches/{periode}/{group_by}/{axe2}'
             , 'App\Activite\Controller::marches'
         )
             ->value('periode', null)
-            ->value('group_by', 'mois');
+            ->value('group_by', 'mois')
+            ->value('axe2', null);
 
         return $factory;
     }
@@ -104,21 +108,55 @@ class Controller implements ControllerProviderInterface
     }
 
     /**
-     * @param $periode
-     * @param Request $request
-     * @param Application $app
-     * @return mixed
+     * @param string
+     * @param array $periodQuery['debut' => '', 'find' => '']
+     * @return array
      */
-    public function marches($periode, Request $request, Application $app)
+    private function _calculDataXAxis(string $groupBy, array $periodQuery)
     {
-        $result = array(
-            'error'    => 0,
-            'messages' => array(),
-        );
+        if ($groupBy === 'jour') {
+            $period = new DatePeriod(
+                new DateTime($periodQuery['debut']),
+                new DateInterval('P1D'),
+                new DateTime($periodQuery['fin'])
+            );
 
-        // Vérification période demandée
+            foreach ($period as $jour) {
+                $dataXAxis[$jour->format('Y-m-d')] = $jour->format("D d\nM Y");
+            }
+            $dataXAxis[$period->getEndDate()->format('Y-m-d')] = $period->getEndDate()->format("D d\nM Y");
+
+        } elseif ($groupBy === 'mois') {
+            $period = new DatePeriod(
+                new DateTime($periodQuery['debut']),
+                new DateInterval('P1M'),
+                new DateTime($periodQuery['fin'])
+            );
+
+            foreach ($period as $jour) {
+                $dataXAxis[$jour->format('Y-m')] = $jour->format("M Y");
+            }
+            $dataXAxis[$period->getEndDate()->format('Y-m')] = $period->getEndDate()->format("M Y");
+        }
+         elseif ($groupBy === 'semaine') {
+            $period = new DatePeriod(
+                new DateTime($periodQuery['debut']),
+                new DateInterval('P7D'),
+                new DateTime($periodQuery['fin'])
+            );
+
+            foreach ($period as $jour) {
+                $dataXAxis[$jour->format('Y-W')] = $jour->format("\sW Y");
+            }
+            $dataXAxis[$period->getEndDate()->format('Y-W')] = $period->getEndDate()->format("\sW Y");
+        }
+
+        return $dataXAxis;
+    }
+
+    private function _calculPeriodQuery(string $periode)
+    {
         $periodQuery = array();
-
         if ($periode === null) {
 
             $periodQuery['debut'] = date('Y-m-d');
@@ -135,29 +173,114 @@ class Controller implements ControllerProviderInterface
             $periodQuery['debut'] = $periodQuery['fin'] = DateTime::createFromFormat('Ymd', $periode)->format('Y-m-d');
         }
 
-        $result['messages'][] = sprintf("Requête période du %s au %s"
-            , $periodQuery['debut']
-            , $periodQuery['fin']
+        return $periodQuery;
+    }
+
+    /**
+     * @param $periode
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function marches($periode, $group_by, $axe2, Request $request, Application $app)
+    {
+        $result = array(
+            'error'    => 0,
+            'messages' => array(),
         );
+
+        // Vérification période demandée
+        $periodQuery = $this->_calculPeriodQuery($periode);
+
+        $groupBy = 'semaine';
+        if (in_array($group_by, array('jour', 'mois', 'semaine'))) {
+            $groupBy = $group_by;
+        }
 
         // Requête
         $ventes = $app['modelActivite']->getVentes(
             $periodQuery['debut'],
-            $periodQuery['fin']
+            $periodQuery['fin'],
+            $groupBy
         );
 
-        $legends = array_unique(array_column($ventes, 'marche_label'));
-
-        $xAxis = array(
-            array(
-                'type' => 'mois',
-                'data' => array_values(array_unique(array_column($ventes, 'mois'))),
-            ),
+        $meteo = $app['modelMeteo']->getByPeriode(
+            $periodQuery['debut'],
+            $periodQuery['fin'],
+            $groupBy
         );
 
-        $yAxis = array(
-            array('type' => 'value'),
+        $dataXAxis = $this->_calculDataXAxis($groupBy, $periodQuery);
+
+        // Configuration du rendu
+        $chart                 = new ECharts();
+        $chart->legend->data   = array_unique(array_column($ventes, 'marche_label'));
+        $chart->legend->data[] = 'T°';
+        $chart->legend->data[] = 'Précipitations';
+
+        $chart->xAxis[] = array(
+            'type' => 'category',
+            'data' => array_values($dataXAxis),
         );
+
+        $chart->yAxis[] = array(
+            'type' => 'value',
+            'name' => 'ventes',
+        );
+
+        if($axe2 === 'temperaturemax') {
+            $chart->yAxis[] = array(
+                'type'      => 'value',
+                'name'      => 'temperature',
+                'axisLabel' => array(
+                    'formatter' => '{value} °C',
+                ),
+            );
+            // Température Max
+            $tempData = array_column($meteo, 'temperature_max');
+            foreach ($tempData as $key => $temp) {
+                $tempData[$key] = round($temp, 0);
+            }
+            $chart->series[] = array(
+                'type'       => 'bar',
+                'name'       => 'temperature',
+                'yAxisIndex' => 1,
+                'itemStyle'  => array(
+                    'normal' => array(
+                        'color' => 'rgba(193,35,43,0.3)',
+                        'label' => array('show' => true),
+                    ),
+                ),
+                'data'       => $tempData,
+            );
+        }
+        elseif($axe2 === 'precipitations') {
+            $chart->yAxis[] = array(
+                'type'      => 'value',
+                'name'      => 'precipitations',
+                'axisLabel' => array(
+                    'formatter' => '{value} mm',
+                ),
+            );
+            // Précipitations
+            $tempData = array_column($meteo, 'pluie');
+            foreach ($tempData as $key => $temp) {
+                $tempData[$key] = $temp*10;
+            }
+
+            $chart->series[] = array(
+                'type'       => 'bar',
+                'name'       => 'precipitations',
+                'yAxisIndex' => 0,
+                'itemStyle'  => array(
+                    'normal' => array(
+                        'color' => 'rgba(18, 113, 158, 0.3)',
+                        'label' => array('show' => false),
+                    ),
+                ),
+                'data'       => $tempData,
+            );
+        }
 
         $series = array();
         foreach ($ventes as $key => $vente) {
@@ -165,25 +288,37 @@ class Controller implements ControllerProviderInterface
                 $series[$vente['marche_label']] = array(
                     'type' => 'line',
                     'name' => $vente['marche_label'],
-                    'data' => [],
+                    'data' => array_fill_keys(array_keys($dataXAxis), null),
                 );
             }
 
-            $series[$vente['marche_label']]['data'][] =
-                (int) $vente['quantites_vendues'];
-
+            $series[$vente['marche_label']]['data'][$vente[$groupBy]] =
+            (int) $vente['quantites_vendues'];
         }
 
-        $result['result'] = array(
-            'legends' => $legends,
-            'xAxis'   => $xAxis,
-            'yAxis'   => $yAxis,
-            'series'  => $series,
+        foreach ($series as $key => $serie) {
+            $serie['data']   = array_values($serie['data']);
+            $chart->series[] = $serie;
+        }
+
+
+        $chart->title->text = sprintf("Evolution des Marché");
+
+        $chart->title->subtitle = "Par {$groupBy}";
+
+        $chart->tooltip->trigger = 'axis';
+        $chart->tooltip->show    = true;
+        $chart->toolbox          = array(
+            'show'   => true,
+            'orient' => 'vertical',
+            'x'      => 'right',
+            'y'      => 'center',
         );
 
-        include (__DIR__ . '/views/marches.php');
+        include __DIR__ . '/views/marches.php';
 
-        return;
+        return '';
     }
+
 
 }
