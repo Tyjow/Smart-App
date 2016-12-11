@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+</head>
+<body>
+
+    <div id="main" style="height:400px"></div>
+	<div id="main2" style="height:400px"></div>
+    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+<!--	 <script src="./js/echarts.js"></script>-->
+    <script type="text/javascript">
+
+         require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+   
+        
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar' 
+            ],
+            function (ec) {
+                var myChart = ec.init(document.getElementById('main')); 
+                
+                var option = {
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            
+            type : 'shadow'        
+        }
+	},
+    legend: {
+        data:['porte sud','porte nord','porte parking','Nombre_ticket']
+    },
+    toolbox: {
+        show : true,
+        orient: 'vertical',
+        x: 'right',
+        y: 'center',
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            data :['janvier','fevrier','mars','avril','mai','juin','juillet','aout','septembre','octobre','novembre','decembre']
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+		
+        {
+            name:'porte sud',
+            type:'bar',
+            stack: 'entree',
+			itemStyle: {normal: {color:'rgba(193,35,43,1)', label:{show:true,position: 'insideTop',textStyle:{color:'#000'}}}},
+            data:[91142, 57663, 43028, 56105, 58635, 75972, 65294,46908,37068,61633,60647,14342]
+        },
+		{
+            name:'porte nord',
+            type:'bar',
+            stack: 'entree',
+			 itemStyle: {normal: {color:'rgba(181,195,52,1)', label:{show:true,position: 'insideTop',textStyle:{color:'#000'}}}},
+            data:[67440, 34446, 25012, 31744, 30726, 46952, 39375,27742,23927,38838,39413,10573]
+        },
+		{
+            name:'porte parking',
+            type:'bar',
+            stack: 'entree',
+			itemStyle: {normal: {color:'rgba(145,115,52,1)', label : {
+                        show: true, 
+                        position: 'top',
+            }}},
+            data:[33849, 19345, 15393, 17908, 17126, 22509, 18401,13496,13263,20713,18106,4764]
+        },
+        {
+            name:'Nombre_ticket',
+            type:'bar',
+			itemStyle: {normal: {color:'rgba(100,200,52,1)', label : {
+                        show: true, 
+                        position: 'top',
+						textStyle:{color:'#000'},
+            }}},
+            data:[25781, 10703, 9881, 8268, 9842, 21080, 17675,'6466','6913','12212','10362','3502'],
+			
+        }
+    ]
+};
+				myChart.setOption(option);
+            }
+        );
+    </script>
+	<script type="text/javascript">
+
+         require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+   
+        
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar' 
+            ],
+            function (ec) {
+                var myChart = ec.init(document.getElementById('main2')); 
+                
+                var option2 = {
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            
+            type : 'shadow'        
+        }
+	},
+    legend: {
+        data:['Rentabilite en pourcentage']
+    },
+    toolbox: {
+        show : true,
+        orient: 'vertical',
+        x: 'right',
+        y: 'center',
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            data :['janvier','fevrier','mars','avril','mai','juin','juillet','aout','septembre','octobre','novembre','decembre']
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+		{
+            name:'Rentabilite en pourcentage',
+            type:'bar',
+			 itemStyle: {normal: {color:'rgba(181,195,52,1)', label:{show:true,position: 'insideTop',textStyle:{color:'#000'}}}},
+            data:[13.3, 9.6, 11.8, 7.8, 9.2, 14.4, 14.3, 7.3, 9.3, 10.07, 8.7, 11.7]
+        }
+    ]
+};
+				myChart.setOption(option2);
+            }
+        );
+    </script>
+
+</body>
