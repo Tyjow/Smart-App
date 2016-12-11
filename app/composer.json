@@ -1,0 +1,7 @@
+{
+    "require": {
+        "silex/silex": "~2.0",
+        "symfony/var-dumper": "^3.2",
+        "doctrine/dbal": "~2.2"
+    }
+}
