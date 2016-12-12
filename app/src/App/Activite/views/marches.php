@@ -17,7 +17,7 @@
 <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <br />
-        <a href="/index.html" class="site_title"><i class="fa fa-eye"></i> <span>Nb d'entrée vs nb d'achat</span></a>
+        <a href="/" class="site_title"><i class="fa fa-eye"></i> <span>Nb d'entrée vs nb d'achat</span></a>
         <br />
         <br />
         <a>
@@ -59,16 +59,25 @@
                 <!--Période-->
                 <div class="col-md-6 periode text-center">
                     <h3 style="margin-top:0;padding-top:5px;font-size: 20px;">Période</h3>
-                    <input type="text" name="datefilter" value="" />
+                    <input type="date" name="dateDebut" value="" />
+                    <input type="date" name="dateFin" value="" />
                 </div>
                 <div class="col-md-6 affichage text-center">
                     <h3 style="margin-top:0;padding-top:10px;font-size: 20px;">Type d'affichage</h3>
+
+                    <?php
+                    $lienMois = str_replace(array('jour', 'semaine'), 'mois', $_SERVER['REDIRECT_URL']);
+                    $lienSemaines = str_replace(array('jour', 'mois'), 'semaine', $_SERVER['REDIRECT_URL']);
+                    $lienJour = str_replace(array('semaine', 'mois'), 'jour', $_SERVER['REDIRECT_URL']);
+                    ?>
+
                     <label class="radio-inline">
-                        <input type="radio" name="optradio"><a href="#">Mois</a></label>
+                        <input type="radio" name="optradio"><a href="<?php echo $lienMois;?>">Mois</a></label>
                     <label class="radio-inline">
-                        <input type="radio" name="optradio"><a href="#">Semaines</a></label>
+                        <input type="radio" name="optradio"><a href="<?php echo $lienSemaines;?>">Semaines</a></label>
+
                     <label class="radio-inline">
-                        <input type="radio" name="optradio"><a href="#">Jours</a></label>
+                        <input type="radio" name="optradio"><a href="<?php echo $lienJour;?>">Jours</a></label>
                 </div>
             </div>
         </div>
